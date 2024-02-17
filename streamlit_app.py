@@ -44,7 +44,7 @@ except URLError as e:
 # fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
 # streamlit.text(fruityvice_response.json())
 
-streamlit.text("View Our Fruit List - Add Your Favorites!")
+streamlit.header("View Our Fruit List - Add Your Favorites!")
 #snoflake related functions:
 def get_fruit_load_list():
    with my_cnx.cursor() as my_cur:
