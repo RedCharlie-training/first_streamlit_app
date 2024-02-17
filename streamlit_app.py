@@ -44,20 +44,25 @@ except URLError as e:
 # fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
 # streamlit.text(fruityvice_response.json())
 
-# write your own comment -what does the next line do? Normalizes the data, i.e. like a flat file
-
-# write your own comment - what does this do? it displays the normalized data
-
-
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-#my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
-my_cur.execute("SELECT * from fruit_load_list")
-#my_data_row = my_cur.fetchone()
-my_data_rows = my_cur.fetchall()
-#streamlit.text("Hello from Snowflake:")
 streamlit.text("The fruit list contains:")
+#snoflake related functions:
+def get_fruit_load_list():
+   with my_cnx.cursor() as my_cur
+      my_cur.execute("SELECT * from fruit_load_list")
+      return my_cur.fetchall()
+
+#add a button to get the list
+my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+my_data_rows = get_fruit_load_list()
 streamlit.dataframe(my_data_rows)
+
+# my_cur = my_cnx.cursor()
+# my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
+# my_cur.execute("SELECT * from fruit_load_list")
+# my_data_row = my_cur.fetchone()
+# my_data_rows = my_cur.fetchall()
+# streamlit.text("Hello from Snowflake:")
+# streamlit.dataframe(my_data_rows)
 
 add_my_fruit = streamlit.text_input('Would you like to add a fruit to the list?','Dorian')
 streamlit.text("Thanks for adding " + add_my_fruit)
